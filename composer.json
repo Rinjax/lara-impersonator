@@ -1,0 +1,21 @@
+{
+    "name": "rinjax/lara-impersonator",
+    "description": "Package to impersonate other user logins",
+    "version": "0.0.0",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "Rinjax\\LaraImpersonator\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Rinjax\\LaraImpersonator\\Providers\\LaraImpersonatorServiceProvider"
+            ]
+        }
+    }
+}
