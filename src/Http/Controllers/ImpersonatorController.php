@@ -21,7 +21,7 @@ class ImpersonatorController extends Controller
 
         }elseif($request->user()->canImpersonate()){
 
-            session()->put('impersonating', $id);
+            session()->put('impersonate', $id);
 
             session()->flash('success', 'now in impersonating mode');
 

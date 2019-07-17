@@ -1,7 +1,7 @@
 {
     "name": "rinjax/lara-impersonator",
     "description": "Package to impersonate other user logins",
-    "version": "0.0.0",
+    "version": "0.0.1",
     "type": "library",
     "license": "MIT",
     "require": {},
