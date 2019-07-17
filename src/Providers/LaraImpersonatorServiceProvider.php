@@ -7,6 +7,7 @@ use Rinjax\LaraImpersonator\Middleware\ImpersonateMiddleware;
 
 class LaraImpersonatorServiceProvider extends ServiceProvider
 {
+
     public function boot()
     {
         $this->loadRoutesFrom(__DIR__ . '/../Http/Routes/routes.php');
@@ -23,6 +24,9 @@ class LaraImpersonatorServiceProvider extends ServiceProvider
 
     }
 
+    /**
+     * Register custom blade directives
+     */
     protected function registerBladeDirectives()
     {
         /**
