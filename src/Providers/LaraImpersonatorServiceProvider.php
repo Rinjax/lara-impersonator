@@ -10,11 +10,15 @@ class LaraImpersonatorServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/../Http/Routes/routes.php');
+        if(config('impersonator.register_routes')) $this->loadRoutesFrom(__DIR__ . '/../Http/Routes/routes.php');
 
         $this->app['router']->aliasMiddleware('impersonate', ImpersonateMiddleware::class);
 
         $this->app['router']->pushMiddlewareToGroup('web', ImpersonateMiddleware::class);
+
+        $this->publishes([
+            __DIR__.'/../Config/impersonator.php' => config_path('impersonator.php')
+        ], 'impersonator');
 
         $this->registerBladeDirectives();
     }
@@ -44,7 +48,7 @@ class LaraImpersonatorServiceProvider extends ServiceProvider
          * Custom blade direct for if the user can impersonate other users.
          */
         \Blade::directive('canImpersonate', function(){
-            return "<?php if (session()->has('impersonate')): ?>";
+            return "<?php if (\Auth::user()->canImpersonate()): ?>";
         });
         \Blade::directive('endImpersonate', function(){
             return '<?php endif; ?>';

@@ -4,9 +4,23 @@ namespace Rinjax\LaraImpersonator\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Rinjax\LaraImpersonator\Managers\ImpersonatorManager;
 
 class ImpersonatorController extends Controller
 {
+    /**
+     * Manager class to process logic
+     * @var ImpersonatorManager
+     */
+    protected $Manager;
+
+    /**
+     * ImpersonatorController constructor.
+     */
+    public function __construct()
+    {
+     $this->Manager = new ImpersonatorManager();
+    }
     /**
      * Set the impersonation flag in the session and the id of the user to be impersonated
      * @param Request $request
@@ -15,18 +29,14 @@ class ImpersonatorController extends Controller
      */
     public function impersonate(Request $request, $id)
     {
-        if(session()->has('impersonate')){
+        if(!$this->Manager->allReadyImpersonating() && $this->Manager->canDoImpersonating($request, $id)) {
 
-            session()->flash('error', 'You are already impersonating');
-
-        }elseif($request->user()->canImpersonate()){
-
-            session()->put('impersonate', $id);
-
-            session()->flash('success', 'now in impersonating mode');
-
-            return back();
+            $this->Manager->setImpersonating($id);
         }
+
+        $this->Manager->flashMessagesToSession();
+
+        return $this->Manager->returnUrl();
     }
 
     /**
@@ -35,10 +45,6 @@ class ImpersonatorController extends Controller
      */
     public function clear()
     {
-        session()->forget('impersonate');
-
-        session()->put('success', 'Returned to your normal account');
-
-        return back();
+       return $this->Manager->clear()->returnUrl();
     }
 }
