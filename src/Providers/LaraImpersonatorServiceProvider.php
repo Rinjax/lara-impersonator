@@ -34,24 +34,26 @@ class LaraImpersonatorServiceProvider extends ServiceProvider
     protected function registerBladeDirectives()
     {
         /**
-         * Custom blade direct for if the user is currently impersonating.
+         * Custom blade directive for if the user is currently impersonating.
          */
-        \Blade::directive('ifImpersonating', function(){
-            return "<?php if (session()->has('impersonate')): ?>";
-        });
-        \Blade::directive('endImpersonating', function(){
-            return '<?php endif; ?>';
+        \Blade::if('ifImpersonating', function(){
+            return (session()->has('impersonate'));
         });
 
 
         /**
-         * Custom blade direct for if the user can impersonate other users.
+         * Custom blade directive for if the user can impersonate other users.
          */
-        \Blade::directive('canImpersonate', function(){
-            return "<?php if (\Auth::user()->canImpersonate()): ?>";
+        \Blade::if('canImpersonate', function(){
+            return \Auth::user()->canImpersonate();
         });
-        \Blade::directive('endImpersonate', function(){
-            return '<?php endif; ?>';
+
+
+        /**
+         * Custom blade directive for if the user can be impersonated
+         */
+        \Blade::if('canBeImpersonated', function($user){
+            return $user->canBeImpersonated();
         });
     }
 }
