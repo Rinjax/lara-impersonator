@@ -3,7 +3,7 @@
 namespace Rinjax\LaraImpersonator\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Rinjax\LaraImpersonator\Middleware\ImpersonateMiddleware;
+use Rinjax\LaraImpersonator\Http\Middleware\ImpersonateMiddleware;
 
 class LaraImpersonatorServiceProvider extends ServiceProvider
 {

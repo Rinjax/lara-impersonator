@@ -1,6 +1,6 @@
 <?php
 
-namespace Rinjax\LaraImpersonator\Middleware;
+namespace Rinjax\LaraImpersonator\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
